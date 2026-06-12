@@ -1,25 +1,16 @@
+import { Routes, Route, Navigate } from "react-router-dom";
+import Home from "./pages/Home.jsx";
+import Lobby from "./pages/Lobby.jsx";
+import Game from "./pages/Game.jsx";
 
-import './index.css';
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-       
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/"      element={<Home />} />
+      <Route path="/lobby" element={<Lobby />} />
+      <Route path="/game"  element={<Game />} />
+      <Route path="*"      element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
-
-export default App;
