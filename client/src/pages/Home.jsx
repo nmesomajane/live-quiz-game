@@ -1,12 +1,4 @@
-/**
- * HOME PAGE
- *
- * Landing screen. Two paths:
- *   1. Create Session → player becomes Game Master, gets a room code
- *   2. Join Session   → player enters a code + name to join existing lobby
- *
- * On success both paths navigate to /lobby.
- */
+
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -25,13 +17,13 @@ export default function Home() {
   const [code,       setCode]       = useState("");
   const [loading,    setLoading]    = useState(false);
 
-  // ── Helpers ─────────────────────────────────────────────────────────────────
+  
 
   function connectSocket() {
     if (!socket.connected) socket.connect();
   }
 
-  // ── Create Session ───────────────────────────────────────────────────────────
+
 
   async function handleCreate(e) {
     e.preventDefault();
@@ -67,7 +59,7 @@ export default function Home() {
     }
   }
 
-  // ── Join Session ─────────────────────────────────────────────────────────────
+  // Join Session 
 
   async function handleJoin(e) {
     e.preventDefault();
@@ -100,7 +92,7 @@ export default function Home() {
     }
   }
 
-  // ── Render ───────────────────────────────────────────────────────────────────
+
 
   return (
     <div className="min-h-screen bg-navy flex flex-col items-center justify-center px-4">
@@ -147,7 +139,7 @@ export default function Home() {
           <form onSubmit={handleCreate} className="space-y-4">
             <div>
               <label className="block text-xs font-body text-muted mb-1 uppercase tracking-widest">
-                Your Name
+                User Name
               </label>
               <input
                 value={name}
@@ -172,7 +164,7 @@ export default function Home() {
           <form onSubmit={handleJoin} className="space-y-4">
             <div>
               <label className="block text-xs font-body text-muted mb-1 uppercase tracking-widest">
-                Your Name
+                User Name
               </label>
               <input
                 value={name}
@@ -205,9 +197,7 @@ export default function Home() {
         )}
       </div>
 
-      <p className="mt-6 text-muted text-xs font-body">
-        No account needed · Just a name and a code
-      </p>
+      
     </div>
   );
 }
