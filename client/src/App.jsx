@@ -1,10 +1,13 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Home from "./pages/Home.jsx";
+import Home  from "./pages/Home.jsx";
 import Lobby from "./pages/Lobby.jsx";
-import Game from "./pages/Game.jsx";
+import Game  from "./pages/Game.jsx";
+import { useSocket } from "./hooks/useSocket.js";
 
 
 export default function App() {
+  useSocket();
+
   return (
     <Routes>
       <Route path="/"      element={<Home />} />

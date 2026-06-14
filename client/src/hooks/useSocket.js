@@ -1,39 +1,24 @@
-/**
- * useSocket — Custom Hook: Socket Event Wiring
- *
- * This hook is the bridge between Socket.io events and Zustand state.
- * It lives in one place so event listeners are never accidentally duplicated.
- *
- * PATTERN EXPLAINED:
- * We register socket.on("event", handler) inside useEffect.
- * The cleanup function (return () => socket.off(...)) removes them when
- * the component unmounts — critical to avoid duplicate listeners if the
- * component re-mounts (which React StrictMode does in dev).
- *
- * This hook is called ONCE at the top level of the Game and Lobby pages.
- */
-
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import socket from "../socket/socket.js";
 import useGameStore from "../store/gameStore.js";
 
 export function useSocket() {
-  const navigate   = useNavigate();
+  const navigate = useNavigate();
   const {
     setSession,
     setTimeLeft,
     setConnected,
+    setPlayerId,
     setWinnerInfo,
     addMessage,
     clearMessages,
-    
   } = useGameStore();
 
   useEffect(() => {
-    //  Connection lifecycle 
-
     const onConnect = () => {
+      // Always sync the store's playerId with the current live socket.id
+      setPlayerId(socket.id);
       setConnected(true);
       addMessage({ type: "system", text: "Connected to server." });
     };
@@ -42,8 +27,6 @@ export function useSocket() {
       setConnected(false);
       addMessage({ type: "system", text: `Disconnected: ${reason}` });
     };
-
-    //  Lobby events 
 
     const onPlayerJoined = ({ session, message }) => {
       setSession(session);
@@ -60,10 +43,7 @@ export function useSocket() {
       addMessage({ type: "system", text: message });
     };
 
-    //  Game events 
-
     const onQuestionSet = ({ question, message }) => {
-     
       useGameStore.setState((state) => ({
         session: state.session ? { ...state.session, question } : state.session,
       }));
@@ -82,15 +62,8 @@ export function useSocket() {
       setTimeLeft(timeLeft);
     };
 
-    const onGuessSubmitted = ({ playerName, guess, correct, attemptsLeft, message }) => {
-      addMessage({
-        type:        "guess",
-        text:        message,
-        playerName,
-        guess,
-        correct,
-        attemptsLeft,
-      });
+    const onGuessSubmitted = ({ playerName, guess, correct, attemptsLeft, message, playerId }) => {
+      addMessage({ type: "guess", text: message, playerName, guess, correct, attemptsLeft, playerId });
     };
 
     const onGameWon = ({ winnerId, winnerName, answer, session, message }) => {
@@ -109,15 +82,13 @@ export function useSocket() {
       setSession(session);
       setTimeLeft(60);
       setWinnerInfo(null);
+      clearMessages();
       addMessage({ type: "system", text: message });
-      // Stay on /game — the game page handles both "waiting" and "active" status
     };
 
     const onWaitingForPlayers = ({ message }) => {
       addMessage({ type: "system", text: message });
     };
-
-    //  Register all listeners 
 
     socket.on("connect",             onConnect);
     socket.on("disconnect",          onDisconnect);
@@ -133,8 +104,6 @@ export function useSocket() {
     socket.on("round-reset",         onRoundReset);
     socket.on("waiting-for-players", onWaitingForPlayers);
 
-    //  remove listeners when hook unmounts 
-    
     return () => {
       socket.off("connect",             onConnect);
       socket.off("disconnect",          onDisconnect);
@@ -150,5 +119,6 @@ export function useSocket() {
       socket.off("round-reset",         onRoundReset);
       socket.off("waiting-for-players", onWaitingForPlayers);
     };
-  }, []); 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 }
