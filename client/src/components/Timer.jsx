@@ -1,6 +1,4 @@
-
-
-import useGameStore from "../../store/gameStore.js";
+import useGameStore from "../store/gameStore.js";
 
 const RADIUS        = 28;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;

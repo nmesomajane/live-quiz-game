@@ -1,5 +1,5 @@
 
-import useGameStore from "../../store/gameStore.js";
+import useGameStore from "../store/gameStore.js";
 
 export default function PlayerList() {
   const session  = useGameStore((s) => s.session);

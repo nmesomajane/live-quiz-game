@@ -1,6 +1,4 @@
-
-
-import useGameStore from "../../store/gameStore.js";
+import useGameStore from "../store/gameStore.js";
 
 export default function WinnerBanner() {
   const winnerInfo = useGameStore((s) => s.winnerInfo);

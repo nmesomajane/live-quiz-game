@@ -1,25 +1,3 @@
-/**
- * INDEX.JS — Server Entry Point
- *
- * Wires everything together:
- *   1. Express HTTP server  (REST health check)
- *   2. Socket.io            (real-time WebSocket game events)
- *   3. CORS                 (allows the React client to connect)
- *   4. Handler registration (one per connected socket)
- *
- * WHY BOTH EXPRESS AND SOCKET.IO ON THE SAME PORT?
- * Socket.io attaches to the underlying Node http.Server that Express uses.
- * They share port 4000 — no need to run two separate servers.
- *
- * CONNECTION LIFECYCLE:
- *
- *   Client connects  ──▶  "connection" fires  ──▶  handlers registered
- *                              │
- *                         events flow back and forth
- *                              │
- *   Client closes    ──▶  "disconnect" fires  ──▶  player removed
- */
-
 import "dotenv/config";
 import express from "express";
 import { createServer } from "http";

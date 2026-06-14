@@ -1,6 +1,6 @@
 
 
-import useGameStore from "../../store/gameStore.js";
+import useGameStore from "../store/gameStore.js";
 
 export default function QuestionCard() {
   const session = useGameStore((s) => s.session);
