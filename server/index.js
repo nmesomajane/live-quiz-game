@@ -5,7 +5,7 @@ import { Server } from "socket.io";
 import cors from "cors";
 
 import { sessionHandler } from "./handlers/sessionHandler.js";
-import { gameHandler }    from "./handlers/gameHandler.js";
+import { gameHandler }    from "./handlers/gamehandler.js";
 import { playerHandler }  from "./handlers/playerHandler.js";
 
 
