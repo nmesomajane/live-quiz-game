@@ -1,16 +1,28 @@
-# React + Vite
+# QuizBlitz — Live Guessing Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A real-time multiplayer quiz game where players join, answer questions, 
+and track live scores together.
 
-Currently, two official plugins are available:
+## Tech Stack
+- **Frontend:** React, Vite, Tailwind CSS v4, Zustand, Socket.io-client
+- **Backend:** Node.js, Express, Socket.io
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## How to Play
+1. One player creates a session and becomes Game Master
+2. Share the room code with friends
+3. Game Master sets a question + answer
+4. Start the game — players have 60 seconds and 3 attempts to guess
+5. First correct answer wins 10 points
+6. Next player becomes Game Master for the next round
 
-## React Compiler
+## Run Locally
+```bash
+# Server
+cd server && npm install && npm run dev
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# Client  
+cd client && npm install && npm run dev
+```
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Live Demo
+live-quiz-game.vercel.app

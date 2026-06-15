@@ -13,7 +13,17 @@ import { playerHandler }  from "./handlers/playerHandler.js";
 const app = express();
 
 app.use(express.json());
-app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:5173" }));
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  /https:\/\/live-quiz-game.*\.vercel\.app$/,  // matches ALL vercel preview URLs
+  "http://localhost:3001",
+  "http://localhost:5173",
+].filter(Boolean);
+ 
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ["GET", "POST"],
+}));
 
 
 app.get("/health", (_req, res) => {
@@ -26,7 +36,7 @@ const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: allowedOrigins,
     methods: ["GET", "POST"],
   },
   pingTimeout: 60000,
