@@ -6,10 +6,10 @@ import useGameStore from "../store/gameStore.js";
 
 import ChatWindow   from "../components/ChatWindow.jsx";
 import InputBar     from "../components/InputBar.jsx";
-import QuestionCard from "../components/QuestionCard.jsx";
+import QuestionCard from "../components/questionCard.jsx";
 import PlayerList   from "../components/PlayerList.jsx";
 import Timer        from "../components/Timer.jsx";
-import WinnerBanner from "../components/WinnerBanner.jsx";
+import WinnerBanner from "../components/Winnerbanner.jsx";
 import QuestionForm from "../components/QuestionForm.jsx";
 
 export default function Game() {
